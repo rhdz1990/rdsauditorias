@@ -41,30 +41,63 @@ namespace WAEscaneosRDS.Controllers
         // JSON LPNs por trailer
         public JsonResult ObtenerLPNsPorTrailer(int trailerId)
         {
-            // 1️⃣ Traemos los datos a memoria
-            var lpnsEnMemoria = db.Tags
+            int draw;
+            int start;
+            int length;
+
+            if (!int.TryParse(Request["draw"], out draw))
+                draw = 1;
+
+            if (!int.TryParse(Request["start"], out start) || start < 0)
+                start = 0;
+
+            if (!int.TryParse(Request["length"], out length) || length <= 0)
+                length = 10;
+
+            string searchValue = Request["search[value]"];
+
+            var query = db.Tags
                 .Where(tag => tag.Trailers_Id == trailerId)
-                .SelectMany(tag => tag.Lpns.Select(lpn => new {
+                .SelectMany(tag => tag.Lpns.Select(lpn => new
+                {
                     LPN = lpn.CodigoLpn,
                     Tag = tag.TagNumber,
                     FechaEscaneo = lpn.FechaEscaneo
-                }))
-                .ToList(); // <-- aquí EF trae los datos, ahora podemos usar ToString
+                }));
 
-            // 2️⃣ Convertimos las fechas a ISO
-            var lpnsISO = lpnsEnMemoria
-                .Select(l => new {
+            int recordsTotal = query.Count();
+
+            if (!string.IsNullOrWhiteSpace(searchValue))
+            {
+                query = query.Where(x =>
+                    x.LPN.Contains(searchValue) ||
+                    x.Tag.Contains(searchValue));
+            }
+
+            int recordsFiltered = query.Count();
+
+            var page = query
+                .OrderByDescending(x => x.FechaEscaneo)
+                .Skip(start)
+                .Take(length)
+                .ToList()
+                .Select(l => new
+                {
                     LPN = l.LPN,
                     Tag = l.Tag,
                     FechaEscaneo = l.FechaEscaneo.HasValue
-                                    ? l.FechaEscaneo.Value.ToString("yyyy-MM-ddTHH:mm:ss")
-                                    : null
+                        ? l.FechaEscaneo.Value.ToString("yyyy-MM-ddTHH:mm:ss")
+                        : null
                 })
-                .OrderByDescending(l => l.FechaEscaneo) // Orden descendente
                 .ToList();
 
-            // 3️⃣ Devolvemos formato compatible con DataTables
-            return Json(new { data = lpnsISO }, JsonRequestBehavior.AllowGet);
+            return Json(new
+            {
+                draw = draw,
+                recordsTotal = recordsTotal,
+                recordsFiltered = recordsFiltered,
+                data = page
+            }, JsonRequestBehavior.AllowGet);
 
         }
     }
