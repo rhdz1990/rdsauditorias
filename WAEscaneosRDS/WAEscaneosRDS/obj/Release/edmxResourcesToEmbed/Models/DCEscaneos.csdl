@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="db_a3f19c_administracionModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="TagStates">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Tags" Relationship="db_a3f19c_administracionModel.Tags_TagStates_FK" FromRole="TagStates" ToRole="Tags" />
+  </EntityType>
+  <EntityType Name="Usuarios">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CodigoUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Activo" Type="Boolean" />
+    <NavigationProperty Name="Lpns" Relationship="db_a3f19c_administracionModel.Lpns_Usuarios_FK" FromRole="Usuarios" ToRole="Lpns" />
+  </EntityType>
+  <EntityContainer Name="db_a3f19c_administracionEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="TagStates" EntityType="Self.TagStates" />
+    <EntitySet Name="Usuarios" EntityType="Self.Usuarios" />
+    <EntitySet Name="Tags" EntityType="db_a3f19c_administracionModel.Tags" />
+    <EntitySet Name="Trailers" EntityType="db_a3f19c_administracionModel.Trailers" />
+    <AssociationSet Name="Tags_TagStates_FK" Association="db_a3f19c_administracionModel.Tags_TagStates_FK">
+      <End Role="TagStates" EntitySet="TagStates" />
+      <End Role="Tags" EntitySet="Tags" />
+    </AssociationSet>
+    <AssociationSet Name="Tags_Trailers_FK" Association="db_a3f19c_administracionModel.Tags_Trailers_FK">
+      <End Role="Trailers" EntitySet="Trailers" />
+      <End Role="Tags" EntitySet="Tags" />
+    </AssociationSet>
+    <EntitySet Name="Lpns" EntityType="db_a3f19c_administracionModel.Lpns" />
+    <AssociationSet Name="Lpns_Tags_FK" Association="db_a3f19c_administracionModel.Lpns_Tags_FK">
+      <End Role="Tags" EntitySet="Tags" />
+      <End Role="Lpns" EntitySet="Lpns" />
+    </AssociationSet>
+    <AssociationSet Name="Lpns_Usuarios_FK" Association="db_a3f19c_administracionModel.Lpns_Usuarios_FK">
+      <End Role="Usuarios" EntitySet="Usuarios" />
+      <End Role="Lpns" EntitySet="Lpns" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Tags">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TagNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Trailer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+    <Property Name="TagStates_Id" Type="Int32" Nullable="false" />
+    <Property Name="Trailers_Id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="TagStates" Relationship="db_a3f19c_administracionModel.Tags_TagStates_FK" FromRole="Tags" ToRole="TagStates" />
+    <NavigationProperty Name="Trailers" Relationship="db_a3f19c_administracionModel.Tags_Trailers_FK" FromRole="Tags" ToRole="Trailers" />
+    <NavigationProperty Name="Lpns" Relationship="db_a3f19c_administracionModel.Lpns_Tags_FK" FromRole="Tags" ToRole="Lpns" />
+  </EntityType>
+  <EntityType Name="Trailers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Tags" Relationship="db_a3f19c_administracionModel.Tags_Trailers_FK" FromRole="Trailers" ToRole="Tags" />
+  </EntityType>
+  <Association Name="Tags_TagStates_FK">
+    <End Type="db_a3f19c_administracionModel.TagStates" Role="TagStates" Multiplicity="1" />
+    <End Type="db_a3f19c_administracionModel.Tags" Role="Tags" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TagStates">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Tags">
+        <PropertyRef Name="TagStates_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Tags_Trailers_FK">
+    <End Type="db_a3f19c_administracionModel.Trailers" Role="Trailers" Multiplicity="1" />
+    <End Type="db_a3f19c_administracionModel.Tags" Role="Tags" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Trailers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Tags">
+        <PropertyRef Name="Trailers_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Lpns">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CodigoLpn" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FechaEscaneo" Type="DateTime" Precision="3" />
+    <Property Name="Tags_Id" Type="Int32" Nullable="false" />
+    <Property Name="Usuarios_Id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Tags" Relationship="db_a3f19c_administracionModel.Lpns_Tags_FK" FromRole="Lpns" ToRole="Tags" />
+    <NavigationProperty Name="Usuarios" Relationship="db_a3f19c_administracionModel.Lpns_Usuarios_FK" FromRole="Lpns" ToRole="Usuarios" />
+  </EntityType>
+  <Association Name="Lpns_Tags_FK">
+    <End Type="db_a3f19c_administracionModel.Tags" Role="Tags" Multiplicity="1" />
+    <End Type="db_a3f19c_administracionModel.Lpns" Role="Lpns" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tags">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Lpns">
+        <PropertyRef Name="Tags_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Lpns_Usuarios_FK">
+    <End Type="db_a3f19c_administracionModel.Usuarios" Role="Usuarios" Multiplicity="1" />
+    <End Type="db_a3f19c_administracionModel.Lpns" Role="Lpns" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuarios">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Lpns">
+        <PropertyRef Name="Usuarios_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

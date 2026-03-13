@@ -1,0 +1,672 @@
+﻿@{
+    ViewBag.Title = "Escaneo de Pallets";
+}
+
+<style>
+
+    body {
+        font-family: Arial;
+        margin: 8px;
+    }
+
+    h2 {
+        font-size: 18px;
+        margin: 4px 0;
+    }
+
+    h3 {
+        font-size: 14px;
+        margin: 4px 0;
+    }
+
+    input {
+        height: 28px;
+        font-size: 16px;
+        width: 220px;
+        margin: 2px;
+    }
+
+    button {
+        height: 30px;
+        font-size: 14px;
+        margin: 2px;
+    }
+
+    table {
+        width: 100%;
+        font-size: 18px;
+        border-collapse: collapse;
+    }
+
+    th {
+        background: #f0f0f0;
+        padding: 6px;
+    }
+
+    td {
+        padding: 6px;
+        text-align: center;
+    }
+
+    #infoPanel {
+        background: #f5f5f5;
+        padding: 6px;
+        margin-bottom: 6px;
+        font-size: 14px;
+    }
+</style>
+
+<h2>Escaneo de Pallets</h2>
+
+<!-- PANEL INFORMACION -->
+
+<div id="infoPanel">
+
+    <b>Usuario:</b> <span id="infoUsuario"></span>
+    &nbsp;&nbsp;
+
+    <b>Trailer:</b> <span id="infoTrailer"></span>
+    &nbsp;&nbsp;
+
+    <b>TAG:</b> <span id="infoTag"></span>
+
+</div>
+
+
+<!-- USUARIO -->
+
+<div id="usuarioSection">
+
+    <h3>Escanear Usuario</h3>
+
+    <input id="usuarioInput" autofocus />
+
+</div>
+
+<hr>
+
+
+<!-- TRAILER -->
+
+<div id="trailerSection" style="display:none">
+
+    <h3>Trailer</h3>
+
+    <input id="trailerInput" />
+
+</div>
+
+<hr>
+
+
+<!-- TAG -->
+
+<div id="tagSection" style="display:none">
+
+    <button onclick="modoCrear()">Crear TAG</button>
+    <button onclick="modoBuscar()">Buscar TAG</button>
+
+    <div id="crearTagDiv" style="display:none">
+
+        TAG
+        <input id="tagInput" />
+
+        <button onclick="crearTag()">Crear</button>
+
+    </div>
+
+    <div id="buscarTagDiv" style="display:none">
+
+        TAG
+        <input id="buscarTagInput" />
+
+        <button onclick="buscarTag()">Buscar</button>
+
+    </div>
+
+</div>
+
+
+<hr>
+
+
+<!-- ESCANEO -->
+
+<div id="scanSection" style="display:none">
+
+    <h3>LPN ESCANEADOS: <span id="contadorGlobal">0</span></h3>
+
+    <div style="display:flex; align-items:center; margin-bottom:10px;">
+
+        <input id="scanInput" placeholder="Escanear LPN" class="form-control" style="max-width:250px;">
+
+        <button onclick="cerrarTag()" class="btn btn-danger" style="margin-left:auto;">
+            Cerrar TAG
+        </button>
+    </div>
+
+
+    <table border="1" class="table table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>LPN</th>
+            </tr>
+        </thead>
+        <tbody id="tablaLpnBody"></tbody>
+    </table>
+    <br>
+    <button onclick="cerrarTag()">Cerrar TAG</button>
+</div>
+
+<div id="modalTagDuplicado" style=" display:none; position:fixed; top:0; left:0; width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.6);
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+    ">
+
+    <div style="
+    background:white;
+    padding:20px;
+    width:300px;
+    text-align:center;
+    border-radius:5px;
+    ">
+
+        <h4 style="color:red;">TAG DUPLICADO</h4>
+
+        <p>Este TAG ya fue escaneado.</p>
+
+        <p>Escriba <b>OK</b> para continuar</p>
+
+        <input id="confirmTagOk" class="form-control">
+
+        <br>
+
+        <button class="btn btn-danger" onclick="confirmarTagDuplicado()">Confirmar</button>
+
+    </div>
+</div>
+
+<div id="modalLpnDuplicado" style=" display:none; position:fixed; top:0; left:0; width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.6);
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+    ">
+
+    <div style="
+    background:white;
+    padding:20px;
+    width:300px;
+    text-align:center;
+    border-radius:5px;
+    ">
+
+        <h4 style="color:red;">LPN DUPLICADO</h4>
+
+        <p>Este LPN ya fue escaneado.</p>
+
+        <p>Escriba <b>OK</b> para continuar</p>
+
+        <input id="confirmLpnOk" class="form-control">
+
+        <br>
+
+        <button class="btn btn-danger" onclick="confirmLpnOk()">Confirmar</button>
+
+    </div>
+</div>
+
+
+<script>
+
+    let trailerId = 0
+    let tagId = 0
+    let tagDuplicado = "";
+
+    //--------------------------------
+    // LOGIN USUARIO
+    //--------------------------------
+
+    document.getElementById("usuarioInput")
+        .addEventListener("keydown", function (e) {
+
+            if (e.key === "Enter") {
+
+                let codigo = this.value.trim()
+
+                if (codigo === "") return
+
+                let fd = new FormData()
+                fd.append("codigoUsuario", codigo)
+
+                fetch('/Scan/LoginScanner', {
+                    method: 'POST',
+                    body: fd
+                })
+                    .then(r => r.json())
+                    .then(data => {
+
+                        if (!data.ok) {
+                            alert("Usuario inválido")
+                            return
+                        }
+
+                        document.getElementById("infoUsuario").innerText = data.nombre
+
+                        document.getElementById("usuarioSection").style.display = "none"
+
+                        document.getElementById("trailerSection").style.display = "block"
+
+                        document.getElementById("trailerInput").focus()
+
+                    })
+                this.value = ""
+            }
+        })
+
+
+    //--------------------------------
+    // VALIDAR TRAILER
+    //--------------------------------
+
+    document.getElementById("trailerInput")
+        .addEventListener("keydown", function (e) {
+
+            if (e.key === "Enter") {
+
+                let nombre = this.value.trim()
+
+                let fd = new FormData()
+                fd.append("nombre", nombre)
+
+                fetch('/Scan/ValidarTrailer', {
+                    method: 'POST',
+                    body: fd
+                })
+                    .then(r => r.json())
+                    .then(data => {
+
+                        if (!data.existe) {
+
+                            if (confirm("Trailer no existe ¿crear?")) {
+
+                                let fd2 = new FormData()
+                                fd2.append("nombre", nombre)
+
+                                fetch('/Scan/CrearTrailer', {
+                                    method: 'POST',
+                                    body: fd2
+                                })
+                                    .then(r => r.json())
+                                    .then(x => {
+
+                                        trailerId = x.id
+
+                                        document.getElementById("infoTrailer").innerText = nombre
+
+                                        document.getElementById("trailerSection").style.display = "none"
+
+                                        document.getElementById("tagSection").style.display = "block"
+
+                                    })
+
+                            }
+
+                        } else {
+
+                            trailerId = data.id
+
+                            document.getElementById("infoTrailer").innerText = nombre
+
+                            document.getElementById("trailerSection").style.display = "none"
+
+                            document.getElementById("tagSection").style.display = "block"
+
+                        }
+
+                    })
+
+                this.value = ""
+
+            }
+
+        })
+
+
+    //--------------------------------
+    // MODOS TAG
+    //--------------------------------
+
+    function modoCrear() {
+
+        document.getElementById("crearTagDiv").style.display = "block"
+        document.getElementById("buscarTagDiv").style.display = "none"
+
+    }
+
+    function modoBuscar() {
+
+        document.getElementById("crearTagDiv").style.display = "none"
+        document.getElementById("buscarTagDiv").style.display = "block"
+    }
+
+    //--------------------------------
+    // CREAR TAG
+    //--------------------------------
+
+    function crearTag() {
+
+        let tag = document.getElementById("tagInput").value.trim()
+
+        let regex = /^[a-zA-Z0-9 ]+$/
+
+        if (!regex.test(tag)) {
+
+            alert("El TAG solo puede contener letras, números y espacios")
+
+            return
+
+        }
+
+        tag = tag.toUpperCase()
+
+        let fd = new FormData()
+
+        fd.append("tagNumber", tag)
+        fd.append("trailerId", trailerId)
+
+        fetch('/Scan/CrearTag', {
+            method: 'POST',
+            body: fd
+        })
+            .then(r => r.json())
+            .then(data => {
+
+                if (!data.ok) {
+
+                    tagDuplicado = tag
+
+                    mostrarModalTagDuplicado(tagDuplicado)
+
+                    return
+
+                }
+                else {
+                    tagId = data.tagId
+
+                    infoTag.innerText = tag
+
+                    tagInput.value = ""
+
+                    iniciarEscaneo()
+                }              
+
+            })
+    }
+
+
+    //--------------------------------
+    // BUSCAR TAG
+    //--------------------------------
+
+    function buscarTag() {
+
+        let tag = document.getElementById("buscarTagInput").value.trim()
+
+        let fd = new FormData()
+
+        fd.append("tagNumber", tag)
+
+        fetch('/Scan/BuscarTag', {
+            method: 'POST',
+            body: fd
+        })
+            .then(r => r.json())
+            .then(data => {
+
+                if (!data.existe) {
+                    alert("TAG no encontrado")
+                    return
+                }
+
+                tagId = data.tagId
+
+                document.getElementById("infoTag").innerText = tag
+
+                let tabla = document.getElementById("tablaLpnBody")
+                tabla.innerHTML = ""
+
+                data.lpns.forEach(function (lpn) {
+
+                    let row = `
+<tr>
+<td></td>
+<td>${lpn}</td>
+</tr>
+`
+
+                    tabla.insertAdjacentHTML("beforeend", row)
+
+                })
+
+                actualizarIndices()
+
+                iniciarEscaneo()
+
+            })
+
+
+        if (tagId > 0) {
+
+            let scan = document.getElementById("scanInput")
+
+            if (document.activeElement !== scan)
+                scan.focus()
+        }
+
+    }
+
+
+    //--------------------------------
+    // INICIAR ESCANEO
+    //--------------------------------
+
+    function iniciarEscaneo() {
+
+        document.getElementById("scanSection").style.display = "block"
+
+        document.getElementById("scanInput").focus()
+
+    }
+
+    //--------------------------------
+    // ESCANEAR LPN
+    //--------------------------------
+
+    document.getElementById("scanInput")
+        .addEventListener("keydown", function (e) {
+
+            if (e.key === "Enter") {
+
+                e.preventDefault()
+
+                let codigo = this.value.trim()
+
+                if (codigo === "") return
+
+                let fd = new FormData()
+
+                fd.append("tagId", tagId)
+                fd.append("codigo", codigo)
+
+                fetch('/Scan/EscanearLpn', {
+                    method: 'POST',
+                    body: fd
+                })
+                    .then(r => r.json())
+                    .then(data => {
+
+                        if (data.ok) {
+
+                            agregarFila(data.codigo)
+
+                            if (tagId > 0) {
+
+                                let scan = document.getElementById("scanInput")
+
+                                if (document.activeElement !== scan)
+                                    scan.focus()
+                            }
+
+
+                        } else {
+
+                            mostrarModalTagDuplicado();
+
+                        }
+
+                    })
+
+                this.value = ""
+
+            }
+
+        })
+
+
+    //--------------------------------
+    // AGREGAR FILA
+    //--------------------------------
+
+    function agregarFila(codigo) {
+
+        let tabla = document.getElementById("tablaLpnBody")
+
+        let row = document.createElement("tr")
+
+        row.innerHTML = `
+<td></td>
+<td>${codigo}</td>
+`
+
+        tabla.insertBefore(row, tabla.firstChild)
+
+        actualizarIndices()
+
+    }
+
+
+    //--------------------------------
+    // INDICE DESCENDENTE
+    //--------------------------------
+
+    function actualizarIndices() {
+
+        let filas = document.querySelectorAll("#tablaLpnBody tr")
+
+        let total = filas.length
+
+        filas.forEach(function (fila, index) {
+
+            fila.cells[0].innerText = total - index
+
+        })
+
+        document.getElementById("contadorGlobal").innerText = total
+
+    }
+
+
+    //--------------------------------
+    // CERRAR TAG
+    //--------------------------------
+
+    function cerrarTag() {
+
+        if (tagId === 0) return
+
+        if (!confirm("¿Cerrar TAG?")) return
+
+        let fd = new FormData()
+        fd.append("tagId", tagId)
+
+        fetch('/Scan/CerrarTag', {
+            method: 'POST',
+            body: fd
+        })
+            .then(r => r.json())
+            .then(data => {
+
+                if (!data.ok) {
+                    alert("Error al cerrar TAG")
+                    return
+                }
+
+                document.getElementById("tablaLpnBody").innerHTML = ""
+                document.getElementById("contadorGlobal").innerText = "0"
+
+                tagId = 0
+
+                document.getElementById("infoTag").innerText = ""
+
+                document.getElementById("tagInput").value = ""
+                document.getElementById("buscarTagInput").value = ""
+
+                document.getElementById("tagInput").focus()
+
+            })
+
+    }
+
+
+    //--------------------------------
+    // CONTROL FOCO ESCANER
+    //--------------------------------
+
+    // MODAL TAG DUPLICADO
+
+    // Mostrar modal TAG duplicado
+    function mostrarModalTagDuplicado(tag) {
+        tagDuplicado = tag;
+        document.getElementById("modalTagDuplicado").style.display = "flex";
+        document.getElementById("confirmTagOk").value = "";
+        document.getElementById("confirmTagOk").focus()
+    }
+
+    // Confirmar TAG duplicado
+    function confirmarTagDuplicado() {
+        let valor = document.getElementById("confirmTagOk").value.trim().toUpperCase();
+        if (valor !== "OK") {
+            alert("Debe escribir OK para continuar");
+            return;
+        }
+        document.getElementById("modalTagDuplicado").style.display = "none";
+
+        // Llamar a la función de búsqueda del TAG existente
+        document.getElementById("buscarTagInput").value = tagDuplicado;
+        //buscarTag(); // Asegúrate de tener esta función que carga el TAG y sus LPN
+    }
+
+    // Mostrar modal LPN duplicado
+    function mostrarModalLpnDuplicado() {
+        document.getElementById("modalLpnDuplicado").style.display = "flex";
+        document.getElementById("confirmLpnOk").value = "";
+        document.getElementById("confirmLpnOk").focus()
+    }
+
+    // Confirmar LPN duplicado
+    function confirmarLpnDuplicado() {
+        let valor = document.getElementById("confirmLpnOk").value.trim().toUpperCase();
+        if (valor !== "OK") {
+            alert("Debe escribir OK para continuar");
+            return;
+        }
+        document.getElementById("modalLpnDuplicado").style.display = "none";
+        document.getElementById("scanInput").focus();
+    }
+</script>

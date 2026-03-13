@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="db_a3f19c_administracionModelStoreContainer" CdmEntityContainer="db_a3f19c_administracionEntities">
+    <EntitySetMapping Name="TagStates">
+      <EntityTypeMapping TypeName="db_a3f19c_administracionModel.TagStates">
+        <MappingFragment StoreEntitySet="TagStates">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Usuarios">
+      <EntityTypeMapping TypeName="db_a3f19c_administracionModel.Usuarios">
+        <MappingFragment StoreEntitySet="Usuarios">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CodigoUsuario" ColumnName="CodigoUsuario" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Activo" ColumnName="Activo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tags">
+      <EntityTypeMapping TypeName="db_a3f19c_administracionModel.Tags">
+        <MappingFragment StoreEntitySet="Tags">
+          <ScalarProperty Name="Trailers_Id" ColumnName="Trailers_Id" />
+          <ScalarProperty Name="TagStates_Id" ColumnName="TagStates_Id" />
+          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+          <ScalarProperty Name="Trailer" ColumnName="Trailer" />
+          <ScalarProperty Name="TagNumber" ColumnName="TagNumber" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Trailers">
+      <EntityTypeMapping TypeName="db_a3f19c_administracionModel.Trailers">
+        <MappingFragment StoreEntitySet="Trailers">
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Lpns">
+      <EntityTypeMapping TypeName="db_a3f19c_administracionModel.Lpns">
+        <MappingFragment StoreEntitySet="Lpns">
+          <ScalarProperty Name="Usuarios_Id" ColumnName="Usuarios_Id" />
+          <ScalarProperty Name="Tags_Id" ColumnName="Tags_Id" />
+          <ScalarProperty Name="FechaEscaneo" ColumnName="FechaEscaneo" />
+          <ScalarProperty Name="CodigoLpn" ColumnName="CodigoLpn" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

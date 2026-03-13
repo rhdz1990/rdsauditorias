@@ -1,0 +1,328 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="db_a3f19c_administracionModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Lpns">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CodigoLpn" Type="varchar" MaxLength="50" />
+          <Property Name="FechaEscaneo" Type="datetime" />
+          <Property Name="Tags_Id" Type="int" Nullable="false" />
+          <Property Name="Usuarios_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tags">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TagNumber" Type="varchar" MaxLength="50" />
+          <Property Name="Trailer" Type="varchar" MaxLength="50" />
+          <Property Name="FechaCreacion" Type="datetime" />
+          <Property Name="TagStates_Id" Type="int" Nullable="false" />
+          <Property Name="Trailers_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TagStates">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Trailers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CodigoUsuario" Type="varchar" MaxLength="50" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" />
+          <Property Name="Activo" Type="bit" />
+        </EntityType>
+        <Association Name="Lpns_Tags_FK">
+          <End Role="Tags" Type="Self.Tags" Multiplicity="1" />
+          <End Role="Lpns" Type="Self.Lpns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tags">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Lpns">
+              <PropertyRef Name="Tags_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Lpns_Usuarios_FK">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+          <End Role="Lpns" Type="Self.Lpns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Lpns">
+              <PropertyRef Name="Usuarios_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Tags_TagStates_FK">
+          <End Role="TagStates" Type="Self.TagStates" Multiplicity="1" />
+          <End Role="Tags" Type="Self.Tags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TagStates">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tags">
+              <PropertyRef Name="TagStates_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Tags_Trailers_FK">
+          <End Role="Trailers" Type="Self.Trailers" Multiplicity="1" />
+          <End Role="Tags" Type="Self.Tags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trailers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tags">
+              <PropertyRef Name="Trailers_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="db_a3f19c_administracionModelStoreContainer">
+          <EntitySet Name="Lpns" EntityType="Self.Lpns" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tags" EntityType="Self.Tags" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TagStates" EntityType="Self.TagStates" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Trailers" EntityType="Self.Trailers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="Lpns_Tags_FK" Association="Self.Lpns_Tags_FK">
+            <End Role="Tags" EntitySet="Tags" />
+            <End Role="Lpns" EntitySet="Lpns" />
+          </AssociationSet>
+          <AssociationSet Name="Lpns_Usuarios_FK" Association="Self.Lpns_Usuarios_FK">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Lpns" EntitySet="Lpns" />
+          </AssociationSet>
+          <AssociationSet Name="Tags_TagStates_FK" Association="Self.Tags_TagStates_FK">
+            <End Role="TagStates" EntitySet="TagStates" />
+            <End Role="Tags" EntitySet="Tags" />
+          </AssociationSet>
+          <AssociationSet Name="Tags_Trailers_FK" Association="Self.Tags_Trailers_FK">
+            <End Role="Trailers" EntitySet="Trailers" />
+            <End Role="Tags" EntitySet="Tags" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="db_a3f19c_administracionModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="TagStates">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Tags" Relationship="db_a3f19c_administracionModel.Tags_TagStates_FK" FromRole="TagStates" ToRole="Tags" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CodigoUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Activo" Type="Boolean" />
+          <NavigationProperty Name="Lpns" Relationship="db_a3f19c_administracionModel.Lpns_Usuarios_FK" FromRole="Usuarios" ToRole="Lpns" />
+        </EntityType>
+        <EntityContainer Name="db_a3f19c_administracionEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TagStates" EntityType="Self.TagStates" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" />
+          <EntitySet Name="Tags" EntityType="db_a3f19c_administracionModel.Tags" />
+          <EntitySet Name="Trailers" EntityType="db_a3f19c_administracionModel.Trailers" />
+          <AssociationSet Name="Tags_TagStates_FK" Association="db_a3f19c_administracionModel.Tags_TagStates_FK">
+            <End Role="TagStates" EntitySet="TagStates" />
+            <End Role="Tags" EntitySet="Tags" />
+          </AssociationSet>
+          <AssociationSet Name="Tags_Trailers_FK" Association="db_a3f19c_administracionModel.Tags_Trailers_FK">
+            <End Role="Trailers" EntitySet="Trailers" />
+            <End Role="Tags" EntitySet="Tags" />
+          </AssociationSet>
+          <EntitySet Name="Lpns" EntityType="db_a3f19c_administracionModel.Lpns" />
+          <AssociationSet Name="Lpns_Tags_FK" Association="db_a3f19c_administracionModel.Lpns_Tags_FK">
+            <End Role="Tags" EntitySet="Tags" />
+            <End Role="Lpns" EntitySet="Lpns" />
+          </AssociationSet>
+          <AssociationSet Name="Lpns_Usuarios_FK" Association="db_a3f19c_administracionModel.Lpns_Usuarios_FK">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Lpns" EntitySet="Lpns" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Tags">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TagNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Trailer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+          <Property Name="TagStates_Id" Type="Int32" Nullable="false" />
+          <Property Name="Trailers_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TagStates" Relationship="db_a3f19c_administracionModel.Tags_TagStates_FK" FromRole="Tags" ToRole="TagStates" />
+          <NavigationProperty Name="Trailers" Relationship="db_a3f19c_administracionModel.Tags_Trailers_FK" FromRole="Tags" ToRole="Trailers" />
+          <NavigationProperty Name="Lpns" Relationship="db_a3f19c_administracionModel.Lpns_Tags_FK" FromRole="Tags" ToRole="Lpns" />
+        </EntityType>
+        <EntityType Name="Trailers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Tags" Relationship="db_a3f19c_administracionModel.Tags_Trailers_FK" FromRole="Trailers" ToRole="Tags" />
+        </EntityType>
+        <Association Name="Tags_TagStates_FK">
+          <End Type="db_a3f19c_administracionModel.TagStates" Role="TagStates" Multiplicity="1" />
+          <End Type="db_a3f19c_administracionModel.Tags" Role="Tags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TagStates">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tags">
+              <PropertyRef Name="TagStates_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Tags_Trailers_FK">
+          <End Type="db_a3f19c_administracionModel.Trailers" Role="Trailers" Multiplicity="1" />
+          <End Type="db_a3f19c_administracionModel.Tags" Role="Tags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trailers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tags">
+              <PropertyRef Name="Trailers_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Lpns">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CodigoLpn" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaEscaneo" Type="DateTime" Precision="3" />
+          <Property Name="Tags_Id" Type="Int32" Nullable="false" />
+          <Property Name="Usuarios_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Tags" Relationship="db_a3f19c_administracionModel.Lpns_Tags_FK" FromRole="Lpns" ToRole="Tags" />
+          <NavigationProperty Name="Usuarios" Relationship="db_a3f19c_administracionModel.Lpns_Usuarios_FK" FromRole="Lpns" ToRole="Usuarios" />
+        </EntityType>
+        <Association Name="Lpns_Tags_FK">
+          <End Type="db_a3f19c_administracionModel.Tags" Role="Tags" Multiplicity="1" />
+          <End Type="db_a3f19c_administracionModel.Lpns" Role="Lpns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tags">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Lpns">
+              <PropertyRef Name="Tags_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Lpns_Usuarios_FK">
+          <End Type="db_a3f19c_administracionModel.Usuarios" Role="Usuarios" Multiplicity="1" />
+          <End Type="db_a3f19c_administracionModel.Lpns" Role="Lpns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Lpns">
+              <PropertyRef Name="Usuarios_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="db_a3f19c_administracionModelStoreContainer" CdmEntityContainer="db_a3f19c_administracionEntities">
+          <EntitySetMapping Name="TagStates">
+            <EntityTypeMapping TypeName="db_a3f19c_administracionModel.TagStates">
+              <MappingFragment StoreEntitySet="TagStates">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="db_a3f19c_administracionModel.Usuarios">
+              <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CodigoUsuario" ColumnName="CodigoUsuario" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tags">
+            <EntityTypeMapping TypeName="db_a3f19c_administracionModel.Tags">
+              <MappingFragment StoreEntitySet="Tags">
+                <ScalarProperty Name="Trailers_Id" ColumnName="Trailers_Id" />
+                <ScalarProperty Name="TagStates_Id" ColumnName="TagStates_Id" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="Trailer" ColumnName="Trailer" />
+                <ScalarProperty Name="TagNumber" ColumnName="TagNumber" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Trailers">
+            <EntityTypeMapping TypeName="db_a3f19c_administracionModel.Trailers">
+              <MappingFragment StoreEntitySet="Trailers">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Lpns">
+            <EntityTypeMapping TypeName="db_a3f19c_administracionModel.Lpns">
+              <MappingFragment StoreEntitySet="Lpns">
+                <ScalarProperty Name="Usuarios_Id" ColumnName="Usuarios_Id" />
+                <ScalarProperty Name="Tags_Id" ColumnName="Tags_Id" />
+                <ScalarProperty Name="FechaEscaneo" ColumnName="FechaEscaneo" />
+                <ScalarProperty Name="CodigoLpn" ColumnName="CodigoLpn" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

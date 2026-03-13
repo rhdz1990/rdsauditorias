@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+<h3>Trailers Auditados</h3>
+
+<table id="tablaTrailers" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre Trailer</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+@section Scripts
+    {
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+
+    <script>
+        $(document).ready(function(){
+            $('#tablaTrailers').DataTable({
+                "ajax": {
+                    "url": "@Url.Action("ObtenerTrailers","Trailers")",
+                    "type": "GET",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "Id" },
+                    { "data": "Nombre" },
+                    {
+                        "data": "Id",
+                        "render": function (data, type, row) {
+                            return '<a href="/Trailers/DetalleTrailer?trailerId=' + data + '" class="btn btn-info btn-sm">Ver LPNs</a>';
+                        }
+                    }
+                ],
+                "order": [[0, "desc"]],
+                "responsive": true,
+                "paging": true,
+                "searching": true,
+                "language": {
+                    "emptyTable": "No hay trailers registrados"
+                }
+            });
+
+        });
+    </script>
+}

@@ -1,0 +1,105 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\rhern\\source\\repos\\WAEscaneosRDS\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A5C3A61D-C1A8-45EF-B599-559174C87200}|WAEscaneosRDS\\WAEscaneosRDS.csproj|c:\\users\\rhern\\source\\repos\\waescaneosrds\\waescaneosrds\\views\\trailers\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A5C3A61D-C1A8-45EF-B599-559174C87200}|WAEscaneosRDS\\WAEscaneosRDS.csproj|solutionrelative:waescaneosrds\\views\\trailers\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A5C3A61D-C1A8-45EF-B599-559174C87200}|WAEscaneosRDS\\WAEscaneosRDS.csproj|c:\\users\\rhern\\source\\repos\\waescaneosrds\\waescaneosrds\\views\\trailers\\detalletrailer.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A5C3A61D-C1A8-45EF-B599-559174C87200}|WAEscaneosRDS\\WAEscaneosRDS.csproj|solutionrelative:waescaneosrds\\views\\trailers\\detalletrailer.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A5C3A61D-C1A8-45EF-B599-559174C87200}|WAEscaneosRDS\\WAEscaneosRDS.csproj|c:\\users\\rhern\\source\\repos\\waescaneosrds\\waescaneosrds\\controllers\\trailerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A5C3A61D-C1A8-45EF-B599-559174C87200}|WAEscaneosRDS\\WAEscaneosRDS.csproj|solutionrelative:waescaneosrds\\controllers\\trailerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A5C3A61D-C1A8-45EF-B599-559174C87200}|WAEscaneosRDS\\WAEscaneosRDS.csproj|c:\\users\\rhern\\source\\repos\\waescaneosrds\\waescaneosrds\\views\\scan\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A5C3A61D-C1A8-45EF-B599-559174C87200}|WAEscaneosRDS\\WAEscaneosRDS.csproj|solutionrelative:waescaneosrds\\views\\scan\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A5C3A61D-C1A8-45EF-B599-559174C87200}|WAEscaneosRDS\\WAEscaneosRDS.csproj|C:\\Users\\rhern\\source\\repos\\WAEscaneosRDS\\waescaneosrds\\controllers\\scancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A5C3A61D-C1A8-45EF-B599-559174C87200}|WAEscaneosRDS\\WAEscaneosRDS.csproj|solutionrelative:waescaneosrds\\controllers\\scancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DetalleTrailer.cshtml",
+              "DocumentMoniker": "C:\\Users\\rhern\\source\\repos\\WAEscaneosRDS\\WAEscaneosRDS\\Views\\Trailers\\DetalleTrailer.cshtml",
+              "RelativeDocumentMoniker": "WAEscaneosRDS\\Views\\Trailers\\DetalleTrailer.cshtml",
+              "ToolTip": "C:\\Users\\rhern\\source\\repos\\WAEscaneosRDS\\WAEscaneosRDS\\Views\\Trailers\\DetalleTrailer.cshtml",
+              "RelativeToolTip": "WAEscaneosRDS\\Views\\Trailers\\DetalleTrailer.cshtml",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAAC4AAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-13T18:14:28.71Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\rhern\\source\\repos\\WAEscaneosRDS\\WAEscaneosRDS\\Views\\Trailers\\Index.cshtml",
+              "RelativeDocumentMoniker": "WAEscaneosRDS\\Views\\Trailers\\Index.cshtml",
+              "ToolTip": "C:\\Users\\rhern\\source\\repos\\WAEscaneosRDS\\WAEscaneosRDS\\Views\\Trailers\\Index.cshtml",
+              "RelativeToolTip": "WAEscaneosRDS\\Views\\Trailers\\Index.cshtml",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAAB0AAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-13T18:03:17.111Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "TrailersController.cs",
+              "DocumentMoniker": "C:\\Users\\rhern\\source\\repos\\WAEscaneosRDS\\WAEscaneosRDS\\Controllers\\TrailersController.cs",
+              "RelativeDocumentMoniker": "WAEscaneosRDS\\Controllers\\TrailersController.cs",
+              "ToolTip": "C:\\Users\\rhern\\source\\repos\\WAEscaneosRDS\\WAEscaneosRDS\\Controllers\\TrailersController.cs*",
+              "RelativeToolTip": "WAEscaneosRDS\\Controllers\\TrailersController.cs*",
+              "ViewState": "AgIAACcAAAAAAAAAAAAowC8AAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-13T18:01:52.171Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ScanController.cs",
+              "DocumentMoniker": "C:\\Users\\rhern\\source\\repos\\WAEscaneosRDS\\WAEscaneosRDS\\Controllers\\ScanController.cs",
+              "RelativeDocumentMoniker": "WAEscaneosRDS\\Controllers\\ScanController.cs",
+              "ToolTip": "C:\\Users\\rhern\\source\\repos\\WAEscaneosRDS\\WAEscaneosRDS\\Controllers\\ScanController.cs",
+              "RelativeToolTip": "WAEscaneosRDS\\Controllers\\ScanController.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAowJcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-12T22:05:38.971Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\rhern\\source\\repos\\WAEscaneosRDS\\WAEscaneosRDS\\Views\\Scan\\Index.cshtml",
+              "RelativeDocumentMoniker": "WAEscaneosRDS\\Views\\Scan\\Index.cshtml",
+              "ToolTip": "C:\\Users\\rhern\\source\\repos\\WAEscaneosRDS\\WAEscaneosRDS\\Views\\Scan\\Index.cshtml",
+              "RelativeToolTip": "WAEscaneosRDS\\Views\\Scan\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-12T22:10:29.988Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

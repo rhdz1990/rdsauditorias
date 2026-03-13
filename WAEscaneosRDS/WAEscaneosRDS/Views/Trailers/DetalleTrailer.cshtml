@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "Detalle Trailer";
+    int trailerId = ViewBag.TrailerId ?? 0;
+}
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+<h3>Detalle LPNs - Trailer @trailerId</h3>
+
+<table id="tablaLPNs" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Tag</th>
+            <th>LPN</th>
+            <th>Fecha Escaneo</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+@section Scripts{
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    
+    <script>
+        $(document).ready(function(){
+
+            let tablaLPNs = $('#tablaLPNs').DataTable({
+                "ajax": {
+                    "url": "@Url.Action("ObtenerLPNsPorTrailer", "Trailers")",
+                    "type": "GET",
+                    "data": { trailerId: @trailerId }
+                },
+                "columns": [
+                    { "data": null },
+                    { "data": "Tag" },
+                    { "data": "LPN" },
+                    {
+                        "data": "FechaEscaneo",
+                        "render": function (d) {
+                            if (!d) return "";
+                            let fecha = new Date(d); // JS interpreta ISO correctamente
+                            return fecha.toLocaleString();
+                        }
+                    }
+                ],
+                "order": [[3, "desc"]],
+                "paging": true,
+                "searching": true,
+                "responsive": true,
+                "language": {
+                    "emptyTable": "No hay LPNs escaneados"
+                },
+                "rowCallback": function(row, data, index){
+                    // Índice descendente
+                    var total = tablaLPNs.rows().count();
+                    $('td:eq(0)', row).html(total - index);
+                }
+            });
+
+        });
+    </script>
+}
