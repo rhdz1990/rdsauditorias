@@ -27,6 +27,8 @@
         $(document).ready(function(){
 
             let tablaLPNs = $('#tablaLPNs').DataTable({
+                "processing": true,
+                "serverSide": true,
                 "ajax": {
                     "url": "@Url.Action("ObtenerLPNsPorTrailer", "Trailers")",
                     "type": "GET",
@@ -53,9 +55,8 @@
                     "emptyTable": "No hay LPNs escaneados"
                 },
                 "rowCallback": function(row, data, index){
-                    // Índice descendente
-                    var total = tablaLPNs.rows().count();
-                    $('td:eq(0)', row).html(total - index);
+                    var pageInfo = tablaLPNs.page.info();
+                    $('td:eq(0)', row).html(pageInfo.start + index + 1);
                 }
             });
 
